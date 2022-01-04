@@ -22,7 +22,7 @@ Also note that this is sort of unstable at the moment. There is no possibility o
 
 Todo-list
 ---
-[ ] Retry to save if fetch did not work
-[ ] Notify the user if quitting but last fetch did not work (+ loading wheel)
-[ ] Warn the user if modifying on an old copy
-[ ] Automatic backups of file versions
+- [ ] Retry to save if fetch did not work
+- [ ] Notify the user if quitting but last fetch did not work (+ loading wheel)
+- [ ] Warn the user if modifying on an old copy
+- [ ] Automatic backups of file versions
