@@ -1,0 +1,10 @@
+/* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing */
+
+body html {
+  height: 100vh;
+  width: 100vw;
+}
+
+ul.svelte-tree-view .node-key {
+  display: none;
+}

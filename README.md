@@ -2,27 +2,38 @@ Bindfiles
 ===
 Host your files as editable html pages
 
-When using [trilium-notes], I found myself wanting a quick way to edit files on my server remotely without having to ssh into it
-This is a very simple implementation for that, the files are hosted under ./userfiles, and the webpage allow you to edit it
+![](https://github.com/joy-void-joy/bindfiles/blob/main/assets/demo_bindfile.gif)
 
-As opposed to google doc or framapad, it's very lightweight and has a one-to-one correspondance with the files
-(TODO: Explain this better + screenshots)
+This project allows you to host an online barebone file editor to edit files on your server directly (Files contained within the folder ./userfiles)  
+I have found this to be very useful to directly modify unimportant config files, RSS feeds (see https://github.com/joy-void-joy/tacocast ), and quick todos
 
 Usage
 ---
-Run ```npm run dev```
+Run ```yarn dev```
 Then head to / to see the list of your files. You may create a new one by visiting /[name]
+
+This can also be deployed with node
+
+Features
+---
+- File and folder creation through pathing
+- Synchronize the content with all instances at once
+- Automatic retries
 
 Notes
 ---
-Note that there is no protection of your api, so anyone with the link can also edit it. If you wish to protect it, run your server under a reverse proxy, and add a basicauth to it.
-I personally use Caddy for that, which works great (TODO: Expand on that)
-
-Also note that this is sort of unstable at the moment. There is no possibility of coedition right now (last change overwrites the file) and no automatic synchronization. See the todolist for more informaiton
+- The sync is very basic, it just copies the whole file content at once
+- There is no API protection, anyone with the link can also edit it. If you wish to protect it, run your server under a reverse proxy, and add a basicauth to it or something more robust. With caddy, if you are running bindfiles on the 3000 port you can do:
+```caddy
+...
+  reverse_proxy 127.0.0.1:3000
+  basicauth {
+    [fill username here] [put your hashed password with caddy hash-password here]
+  }
+```
+- Concurrent edition is not supported. If you do, you will overwrite each other due to synchronisation.
 
 Todo-list
 ---
-- [ ] Retry to save if fetch did not work
-- [ ] Notify the user if quitting but last fetch did not work (+ loading wheel)
-- [ ] Warn the user if modifying on an old copy
+- [ ] Test suite
 - [ ] Automatic backups of file versions
