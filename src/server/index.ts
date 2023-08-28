@@ -11,4 +11,4 @@ const hocusPocus = createHocuspocusExpressWrapper(wsInstance)
 wsInstance.app.use(serverHandler)
 
 // eslint-disable-next-line no-console
-wsInstance.app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`))
+const listener = wsInstance.app.listen(process.env.PORT || 1234, () => console.log(`Listening on port ${listener.address().port}`))
