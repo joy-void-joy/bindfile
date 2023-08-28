@@ -5,6 +5,6 @@ import { treedir } from '$lib/server/treedir'
 
 export const load = (async () => {
   return {
-    listFiles: await treedir(userfiles, { relativeTo: userfiles }),
+    listFiles: await treedir(userfiles, { relativeTo: userfiles, exclude: ['.sqlite'] }),
   }
 }) satisfies PageServerLoad

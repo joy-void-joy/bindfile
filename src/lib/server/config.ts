@@ -1,1 +1,1 @@
-export const userfiles = './userfiles'
+export const userfiles = 'userfiles'

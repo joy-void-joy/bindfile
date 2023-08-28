@@ -3,11 +3,7 @@
   import type { Treedirent } from '$lib/server/treedir'
 
   import Fa from 'svelte-fa'
-  import {
-    faFile,
-    faFolderOpen,
-    faFolderClosed,
-  } from '@fortawesome/free-solid-svg-icons'
+  import { faFile, faFolderOpen, faFolderClosed } from '@fortawesome/free-solid-svg-icons'
 
   export let node: TreeNode<Treedirent>
 </script>

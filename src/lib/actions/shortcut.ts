@@ -10,15 +10,9 @@ export const shortcut = (node: HTMLElement, params: ShortcutProps = {}) => {
   let handler: (this: unknown, ev: KeyboardEvent) => void
   const callHandler = (e: KeyboardEvent) => handler(e)
 
-  const update = () => {
+  const update = (options: ShortcutProps) => {
     handler = (e) => {
-      const {
-        alt = false,
-        shift = false,
-        control = false,
-        code = '',
-        callback,
-      } = params
+      const { alt = false, shift = false, control = false, code = '', callback } = options
 
       if (
         alt != e.altKey ||
@@ -35,7 +29,7 @@ export const shortcut = (node: HTMLElement, params: ShortcutProps = {}) => {
   }
 
   window.addEventListener('keydown', callHandler)
-  update()
+  update(params)
 
   return {
     update,

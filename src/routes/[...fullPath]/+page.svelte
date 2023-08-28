@@ -1,0 +1,86 @@
+<script lang="ts">
+  import { shortcut } from '$lib/actions/shortcut'
+  import { interval } from '$lib/actions/interval'
+  import { onMount } from 'svelte'
+
+  import Fa from 'svelte-fa'
+  import { faSave, faSpinner } from '@fortawesome/free-solid-svg-icons'
+
+  import Tiptap from '../Tiptap.svelte'
+
+  import type { HocuspocusProvider } from '@hocuspocus/provider'
+  import type { IndexeddbPersistence } from 'y-indexeddb'
+  import type * as Y from 'yjs'
+  import type { PageData } from './$types'
+
+  // It is unclear whether having a persistence store is beneficial
+  //
+  // On the one hand, it allows users not to lose data
+  // On the other, it conflicts with the notion that the text file is the ground truth
+  export let usePersistence = false
+
+  export let data: PageData
+
+  let hocuspocusProvider: HocuspocusProvider | null = null
+  let persistenceProvider: IndexeddbPersistence | null = null
+  let ydoc: Y.Doc
+
+  let spin = true
+
+  onMount(async () => {
+    /* Editor */
+    const { HocuspocusProvider } = await import('@hocuspocus/provider')
+    const { IndexeddbPersistence } = await import('y-indexeddb')
+    const Y = await import('yjs')
+
+    ydoc = new Y.Doc()
+
+    hocuspocusProvider = new HocuspocusProvider({
+      url: location.origin.replace(/^http/, 'ws'),
+      name: data.fullPath,
+      document: ydoc,
+    })
+
+    if (usePersistence) {
+      persistenceProvider = new IndexeddbPersistence('example-document', ydoc)
+    }
+  })
+
+  function resync() {
+    spin = hocuspocusProvider?.hasUnsyncedChanges ?? true
+  }
+</script>
+
+<svelte:window
+  on:beforeunload={async (event) => {
+    hocuspocusProvider?.forceSync()
+    if (hocuspocusProvider?.hasUnsyncedChanges) {
+      event.preventDefault()
+      event.returnValue = ''
+      return ''
+    }
+  }}
+/>
+
+<!-- No events really worked for `resync` to receive `synced` events, so we have to poll -->
+<main
+  use:interval={{ delayMs: 100, callback: resync }}
+  use:shortcut={{
+    control: true,
+    code: 'KeyS',
+    callback: () => {
+      hocuspocusProvider?.startSync()
+      resync()
+    },
+  }}
+>
+  {#if spin}
+    <Fa icon={faSpinner} spin />
+  {:else}
+    <Fa icon={faSave} />
+  {/if}
+
+  {#if hocuspocusProvider}
+    <Tiptap {ydoc} />
+  {/if}
+</main>
