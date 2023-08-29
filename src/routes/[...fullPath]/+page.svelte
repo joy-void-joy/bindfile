@@ -73,12 +73,23 @@
   }}
 >
   {#if spin}
-    <Fa icon={faSpinner} spin />
+    <Fa class="save" icon={faSpinner} spin />
   {:else}
-    <Fa icon={faSave} />
+    <Fa class="save" icon={faSave} />
   {/if}
 
   {#if hocuspocusProvider}
     <Tiptap {ydoc} />
   {/if}
 </main>
+
+<style lang="scss">
+  :global(.save) {
+    position: absolute;
+    top: 0;
+    right: 0.25vw;
+    padding: 0;
+    border: none;
+    background: none;
+  }
+</style>
