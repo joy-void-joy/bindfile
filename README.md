@@ -10,7 +10,7 @@ I have found this to be very useful to directly modify unimportant config files,
 ## Usage
 
 `yarn`  
-`yarn dev`  
+`yarn dev`
 
 Then head to / to see the list of your files. You may create a new one by visiting /[name] or even /[subfolder]/[subfolder]/.../[name]
 
@@ -39,6 +39,7 @@ Modify the port with the PORT environment variable (default: 1234)
     [fill username here] [put your hashed password with caddy hash-password here]
   }
 ```
+
 - Concurrent edition is now supported
 
 ## Todo-list
