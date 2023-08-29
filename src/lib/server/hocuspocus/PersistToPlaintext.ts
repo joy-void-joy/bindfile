@@ -1,6 +1,5 @@
 import { generateText } from '@tiptap/core'
 import { TiptapTransformer } from '@hocuspocus/transformer'
-import { userfiles } from '../config'
 
 import path from 'node:path'
 import fs from 'node:fs/promises'
@@ -33,9 +32,12 @@ export class PersistToPlainText implements Extension {
   }
 
   async checkPath(fullpath: string): Promise<string> {
-    const resolvedPath = path.relative(pwd, path.resolve(userfiles, fullpath))
+    const resolvedPath = path.relative(pwd, path.resolve(process.env.SECRET_USERFILES, fullpath))
 
-    if (!resolvedPath.startsWith(userfiles) || this.configuration.exclude?.includes(resolvedPath)) {
+    if (
+      !resolvedPath.startsWith(process.env.SECRET_USERFILES) ||
+      this.configuration.exclude?.includes(resolvedPath)
+    ) {
       throw new Error('Attempted to access a file outside of userfiles')
     }
 

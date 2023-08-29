@@ -8,16 +8,14 @@
 
   import Tiptap from '../Tiptap.svelte'
 
+  import { PUBLIC_ROOT_PATH } from '$env/static/public'
+
+  import { PUBLIC_USE_PERSISTENCE } from '$env/static/public'
+
   import type { HocuspocusProvider } from '@hocuspocus/provider'
   import type { IndexeddbPersistence } from 'y-indexeddb'
   import type * as Y from 'yjs'
   import type { PageData } from './$types'
-
-  // It is unclear whether having a persistence store is beneficial
-  //
-  // On the one hand, it allows users not to lose data
-  // On the other, it conflicts with the notion that the text file is the ground truth
-  export let usePersistence = false
 
   export let data: PageData
 
@@ -36,12 +34,12 @@
     ydoc = new Y.Doc()
 
     hocuspocusProvider = new HocuspocusProvider({
-      url: location.origin.replace(/^http/, 'ws'),
+      url: PUBLIC_ROOT_PATH || location.origin.replace(/^http/, 'ws'),
       name: data.fullPath,
       document: ydoc,
     })
 
-    if (usePersistence) {
+    if (PUBLIC_USE_PERSISTENCE == 'true') {
       persistenceProvider = new IndexeddbPersistence('example-document', ydoc)
     }
   })
