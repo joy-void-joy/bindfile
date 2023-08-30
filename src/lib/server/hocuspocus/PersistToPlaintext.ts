@@ -32,10 +32,10 @@ export class PersistToPlainText implements Extension {
   }
 
   async checkPath(fullpath: string): Promise<string> {
-    const resolvedPath = path.relative(pwd, path.resolve(process.env.SECRET_USERFILES, fullpath))
+    const resolvedPath = path.relative(pwd, path.resolve(process.env.USERFILES, fullpath))
 
     if (
-      !resolvedPath.startsWith(process.env.SECRET_USERFILES) ||
+      !resolvedPath.startsWith(process.env.USERFILES) ||
       this.configuration.exclude?.includes(resolvedPath)
     ) {
       throw new Error('Attempted to access a file outside of userfiles')

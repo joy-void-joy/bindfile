@@ -10,7 +10,7 @@ import type { WebSocketServer } from 'ws'
 
 import 'dotenv/config'
 
-const sqlitePath = `${process.env.SECRET_USERFILES}/.sqlite`
+const sqlitePath = `${process.env.USERFILES}/.sqlite`
 
 export function createHocuspocusServer(wss: WebSocketServer) {
   const hocuspocusServer = HocuspocusServer.configure({
