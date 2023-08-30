@@ -8,11 +8,11 @@ import { PersistToPlainText } from '../../lib/server/hocuspocus/PersistToPlainte
 
 import type { WebSocketServer } from 'ws'
 
-import 'dotenv/config'
+export async function createHocuspocusServer(wss: WebSocketServer) {
+  // To avoid messing with vite's env, we import dotenv inside this function
+  await import('dotenv/config')
+  const sqlitePath = `${process.env.USERFILES}/.sqlite`
 
-const sqlitePath = `${process.env.USERFILES}/.sqlite`
-
-export function createHocuspocusServer(wss: WebSocketServer) {
   const hocuspocusServer = HocuspocusServer.configure({
     name: 'hocuspocus',
     timeout: 30000,

@@ -28,9 +28,9 @@ function createWebsocketViteWrapper(server: ViteDevServer) {
   return result
 }
 
-export function configureServer(server: ViteDevServer) {
+export async function configureServer(server: ViteDevServer) {
   const webSocketServer = createWebsocketViteWrapper(server)
-  const hocuspocusServer = createHocuspocusServer(webSocketServer)
+  const hocuspocusServer = await createHocuspocusServer(webSocketServer)
 }
 
 export const hocuspocus = {
