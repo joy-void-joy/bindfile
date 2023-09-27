@@ -1,7 +1,7 @@
+import type { ViteDevServer } from 'vite'
+
 import { WebSocketServer } from 'ws'
 import { createHocuspocusServer } from './hocuspocus'
-
-import type { ViteDevServer } from 'vite'
 
 function createWebsocketViteWrapper(server: ViteDevServer) {
   if (!server.httpServer) {
@@ -30,7 +30,7 @@ function createWebsocketViteWrapper(server: ViteDevServer) {
 
 export async function configureServer(server: ViteDevServer) {
   const webSocketServer = createWebsocketViteWrapper(server)
-  const hocuspocusServer = await createHocuspocusServer(webSocketServer)
+  const hocuspocusServer = createHocuspocusServer(webSocketServer)
 }
 
 export const hocuspocus = {

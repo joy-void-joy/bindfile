@@ -3,14 +3,16 @@ import { Server as HocuspocusServer } from '@hocuspocus/server'
 import Document from '@tiptap/extension-document'
 import Paragraph from '../../lib/tiptap/Paragraph'
 import Text from '../../lib/tiptap/Text'
+
 import { SQLite } from '@hocuspocus/extension-sqlite'
 import { PersistToPlainText } from '../../lib/server/hocuspocus/PersistToPlaintext'
 
 import type { WebSocketServer } from 'ws'
 
-export async function createHocuspocusServer(wss: WebSocketServer) {
-  // To avoid messing with vite's env, we import dotenv inside this function
-  await import('dotenv/config')
+import { loadEnv } from 'vite'
+
+export function createHocuspocusServer(wss: WebSocketServer, mode = 'dev') {
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd(), '') }
   const sqlitePath = `${process.env.USERFILES}/.sqlite`
 
   const hocuspocusServer = HocuspocusServer.configure({
