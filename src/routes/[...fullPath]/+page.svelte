@@ -34,7 +34,7 @@
     ydoc = new Y.Doc()
 
     hocuspocusProvider = new HocuspocusProvider({
-      url: PUBLIC_ROOT_PATH || location.origin.replace(/^http/, 'ws'),
+      url: PUBLIC_ROOT_PATH ? ("wss://" + PUBLIC_ROOT_PATH.replace(/^https?\:\/\//i, "")) : location.origin.replace(/^http/, 'ws'),
       name: data.fullPath,
       document: ydoc,
     })
